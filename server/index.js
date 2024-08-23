@@ -16,12 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 const corsOptions = {
-<<<<<<< HEAD
-  // origin: "http://localhost:5173",
-  origin: "https://wil-team-client.onrender.com/",
-=======
   origin: "https://wil-team-client.onrender.com",
->>>>>>> b9b5d8f44b9cbb94705aa3c0b7f0f851e4d5fd9d
   credentials: true,
 };
 app.use(cors(corsOptions));
