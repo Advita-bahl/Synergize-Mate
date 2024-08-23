@@ -6,6 +6,8 @@ import {
   logout,
   getAllUsers,
   getUserById,
+  addToWishlist,
+  getWishlist,
 } from "../controllers/user.controller.js";
 import isAuthenticated from "../middlewares/isAuthenticated.js";
 import { singleUpload } from "../middlewares/mutler.js";
@@ -24,5 +26,7 @@ router
 router.route("/logout").get(logout);
 router.route("/get").get(isAuthenticated, getAllUsers);
 router.route("/get/:id").get(isAuthenticated, getUserById);
+router.route("/wishlist").put(isAuthenticated, addToWishlist);
+router.route("/wishlist").get(isAuthenticated, getWishlist);
 
 export default router;

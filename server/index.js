@@ -5,7 +5,7 @@ import cors from "cors";
 import connectDB from "./utils/db.js";
 import userRoute from "./routes/user.route.js";
 import axios from "axios";
-import path from "path";
+
 
 const app = express();
 
@@ -16,7 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 const corsOptions = {
-  origin: "http://localhost:5173",
+  // origin: "http://localhost:5173",
+  origin: "https://wil-team-client.onrender.com/",
   credentials: true,
 };
 app.use(cors(corsOptions));
@@ -28,10 +29,6 @@ const PORT = process.env.PORT || 8000;
 // api's
 app.use("/api/v1/user", userRoute);
 
-// app.use(express.static(path.join(__dirname, "/client/dist")));
-// app.get("*", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
-// });
 
 app.listen(PORT, (err) => {
   if (err) console.log(err);
