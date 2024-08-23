@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 const corsOptions = {
-  origin: "https://wil-team-client.onrender.com/",
+  origin: "https://wil-team-client.onrender.com",
   credentials: true,
 };
 app.use(cors(corsOptions));
