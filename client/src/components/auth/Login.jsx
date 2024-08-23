@@ -40,7 +40,7 @@ const Login = () => {
 
       // console.log('Backend response:', res.data);
       if (res.data.success) {
-        // localStorage.setItem('authToken', res.data.token);
+        localStorage.setItem('authToken', res.data.token);
         // console.log('Token stored:', res.data.token);
         dispatch(setUser(res.data.user));
         navigate("/");
