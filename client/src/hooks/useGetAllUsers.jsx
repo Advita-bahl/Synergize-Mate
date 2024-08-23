@@ -9,12 +9,19 @@ const useGetAllUsers = () => {
   const { searchedQuery } = useSelector((store) => store.auth);
   useEffect(() => {
     const fetchAllUsers = async () => {
-      const token = localStorage.getItem("authToken"); // Retrieve token
+      const token = localStorage.getItem("authToken"); // Retrieve token 
+     
       try {
         //    const res= await axios.get(`${USER_API_END_POINT}/get`, {withCredentials:true});
         const res = await axios.get(
           `${USER_API_END_POINT}/get?keyword=${searchedQuery}`,
-          { withCredentials: true }
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Add token to Authorization header
+            },
+            withCredentials: true, // Include credentials if needed
+          }
+          // { withCredentials: true }
         );
         //    console.log('API response1:', res.data.users);
 
@@ -22,12 +29,15 @@ const useGetAllUsers = () => {
           // console.log('Fetched users:', res.data);
           dispatch(setAllUsers(res.data.users));
         }
+        else {
+          console.log("Failed to fetch users:", res.data.message);
+        }
       } catch (error) {
         console.log(error);
       }
     };
     fetchAllUsers();
-  }, [dispatch]);
+  }, [dispatch, searchedQuery]);
 };
 
 export default useGetAllUsers;
