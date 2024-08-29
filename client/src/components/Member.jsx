@@ -17,6 +17,7 @@ const Member = ({ auth }) => {
   const personId = auth?._id;
   const { user } = useSelector((store) => store.auth);
 
+
   const params = useParams();
   const userId = params.id;
   const [isInWishlist, setIsInWishlist] = useState(false);
@@ -29,9 +30,19 @@ const Member = ({ auth }) => {
   useEffect(() => {
     const checkWishlist = async () => {
       try {
+        const token = localStorage.getItem("authToken");
+        console.log("Retrieved token:", token); 
+        if (!token) {
+          console.error("No auth token found in localStorage");
+          return;
+        }
         const response = await axios.get(`${USER_API_END_POINT}/wishlist`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Add token to Authorization header
+          },
           withCredentials: true,
         });
+        
         const wishlistIds = response.data.wishlist.map((item) => item._id);
         setIsInWishlist(wishlistIds.includes(personId));
       } catch (error) {

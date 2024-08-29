@@ -17,13 +17,18 @@ const WishlistTable = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
+        const token = localStorage.getItem("authToken");
         const response = await axios.get(`${USER_API_END_POINT}/wishlist`, {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`, // Add token to Authorization header
+          },
         });
         // console.log("API Response:", response.data);
+      
         setWishlist(response.data.wishlist || []);
         setLoading(false);
       } catch (error) {
