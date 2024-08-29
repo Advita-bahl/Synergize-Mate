@@ -42,6 +42,7 @@ const MemberDescription2 = () => {
           withCredentials: true,
         });
         if (res.data.success) {
+
           dispatch(setSingleUser(res.data.user));
         }
       } catch (error) {
@@ -81,44 +82,44 @@ const MemberDescription2 = () => {
             <div className="border-t-2 w-1/6 border-black"></div>
             <div className="flex items-center gap-3 my-2">
               <Mail/>
-              <span>{user?.email}</span>
+              <span>{singleUser?.email}</span>
             </div>
             <div className="flex items-center gap-3 my-2">
               <Github />
-              {user?.profile?.github ? (
-                <a>{user?.profile?.github}</a>
+              {singleUser?.profile?.github ? (
+                <a>{singleUser?.profile?.github}</a>
               ) : (
                 <span>NA</span>
               )}
             </div>
             <div className="flex items-center gap-3 my-2">
               <CalendarCheck />
-              {user?.profile?.year ? (
-                <a>{user?.profile?.year}</a>
+              {singleUser?.profile?.year ? (
+                <a>{singleUser?.profile?.year}</a>
               ) : (
                 <span>NA</span>
               )}
             </div>
             <div className="flex items-center gap-3 my-2">
               <GraduationCap />
-              {user?.profile?.course ? (
-                <a>{user?.profile?.course}</a>
+              {singleUser?.profile?.course ? (
+                <a>{singleUser?.profile?.course}</a>
               ) : (
                 <span>NA</span>
               )}
             </div>
             <div className="flex items-center gap-3 my-2">
               <FileBadge2 />
-              {user?.profile?.dept ? (
-                <a>{user?.profile?.dept}</a>
+              {singleUser?.profile?.dept ? (
+                <a>{singleUser?.profile?.dept}</a>
               ) : (
                 <span>NA</span>
               )}
             </div>
             <div className="flex items-center gap-3 my-2">
               <Factory />
-              {user?.profile?.bio ? (
-                <a>{user?.profile?.bio}</a>
+              {singleUser?.profile?.bio ? (
+                <a>{singleUser?.profile?.bio}</a>
               ) : (
                 <span>NA</span>
               )}
@@ -140,11 +141,11 @@ const MemberDescription2 = () => {
           {isResume ? (
             <a
               target="blank"
-              href={user?.profile?.resume}
+              href={singleUser?.profile?.resume}
               className="text-cyan-500 w-full hover:underline cursor-pointer"
               style={{ lineHeight: "1.5" }}
             >
-              {user?.profile?.resumeOriginalName}
+              {singleUser?.profile?.resumeOriginalName}
             </a>
           ) : (
             <span>NA</span>
