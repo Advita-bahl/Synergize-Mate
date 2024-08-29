@@ -107,6 +107,7 @@ export const login = async (req, res) => {
       phoneNumber: user.phoneNumber,
       // role: user.role,
       profile: user.profile,
+      wishlist: user.wishlist,
     };
 
     return res
@@ -213,7 +214,7 @@ export const updateProfile = async (req, res) => {
     const file = req.file;
     // cloudinary ayega idhar
     const fileUri = getDataUri(file);
-    console.log("file:::", fileUri);
+    // console.log("file:::", fileUri);
     const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
     let skillsArray;
@@ -294,10 +295,10 @@ export const updateProfile = async (req, res) => {
 
 export const addToWishlist = async (req, res) => {
   const { _id } = req.user;
-  console.log(_id);
+  // console.log(_id);
   // const _id= req.user;
   const { personId } = req.body;
-  console.log(personId);
+  // console.log(personId);
   try {
     const user = await User.findById(_id);
 
