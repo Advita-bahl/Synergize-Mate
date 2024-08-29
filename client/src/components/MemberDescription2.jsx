@@ -59,7 +59,9 @@ const MemberDescription2 = () => {
 
   return (
     <div className="bg-slate-100">
-    <div className="max-w-7xl mx-auto  ">
+    <div className="max-w-7xl mx-auto">
+    {singleUser ? (
+        <>
       <div className="flex items-center justify-between ">
         <div className="flex items-center gap-4 my-8">
           <Avatar className="h-12 w-12">
@@ -178,6 +180,10 @@ const MemberDescription2 = () => {
           </div>
         </div>
       </div>
+      </>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
     </div>
   );
