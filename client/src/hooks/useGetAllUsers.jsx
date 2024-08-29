@@ -10,11 +10,15 @@ const useGetAllUsers = () => {
   useEffect(() => {
     const fetchAllUsers = async () => {
       const token = localStorage.getItem("authToken"); // Retrieve token 
-     
+      if (!token) {
+        console.error("No auth token found in localStorage");
+        return;
+      }
       try {
         //    const res= await axios.get(`${USER_API_END_POINT}/get`, {withCredentials:true});
         const res = await axios.get(
-          `${USER_API_END_POINT}/get?keyword=${searchedQuery}`,
+          // `${USER_API_END_POINT}/get?keyword=${searchedQuery}`,
+          `${USER_API_END_POINT}/get?keyword=${searchedQuery || ""}`,
           {
             headers: {
               Authorization: `Bearer ${token}`, // Add token to Authorization header
@@ -34,7 +38,17 @@ const useGetAllUsers = () => {
           console.log("Failed to fetch users:", res.data.message);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
+        if (error.response) {
+          // Server responded with a status other than 200 range
+          console.error("Error response from API:", error.response.data);
+        } else if (error.request) {
+          // Request was made but no response received
+          console.error("No response received:", error.request);
+        } else {
+          // Something happened while setting up the request
+          console.error("Error setting up request:", error.message);
+        }
       }
     };
     fetchAllUsers();
