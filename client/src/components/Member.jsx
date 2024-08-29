@@ -17,7 +17,6 @@ const Member = ({ auth }) => {
   const personId = auth?._id;
   const { user } = useSelector((store) => store.auth);
 
-
   const params = useParams();
   const userId = params.id;
   const [isInWishlist, setIsInWishlist] = useState(false);
@@ -31,7 +30,7 @@ const Member = ({ auth }) => {
     const checkWishlist = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        console.log("Retrieved token:", token); 
+        // console.log("Retrieved token:", token);
         if (!token) {
           console.error("No auth token found in localStorage");
           return;
@@ -42,7 +41,7 @@ const Member = ({ auth }) => {
           },
           withCredentials: true,
         });
-        
+
         const wishlistIds = response.data.wishlist.map((item) => item._id);
         setIsInWishlist(wishlistIds.includes(personId));
       } catch (error) {
@@ -56,12 +55,28 @@ const Member = ({ auth }) => {
   const handleWishlistToggle = async () => {
     setLoading(true);
     try {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        console.error("No auth token found");
+        return;
+      }
       const response = await axios.put(
         `${USER_API_END_POINT}/wishlist`,
         { personId },
-        { withCredentials: true }
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Add token to Authorization header
+          },
+          withCredentials: true,
+        }
+      
       );
-      setIsInWishlist(!isInWishlist);
+      // setIsInWishlist(!isInWishlist);
+      if (response.status === 200) {
+        setIsInWishlist(!isInWishlist);
+      } else {
+        console.error("Unexpected response status:", response.status);
+      }
     } catch (error) {
       console.error("Failed to update wishlist", error);
     } finally {
@@ -107,7 +122,7 @@ const Member = ({ auth }) => {
       </div>
 
       <div className="flex items-center gap-2 my-2 rounded-lg">
-        <Button className="p-6 rounded-lg" variant="outline" size="icon" >
+        <Button className="p-6 rounded-lg" variant="outline" size="icon">
           <Avatar>
             <AvatarImage src={auth?.profile?.profilePhoto} />
           </Avatar>
@@ -134,9 +149,7 @@ const Member = ({ auth }) => {
         <Badge className={"text-[#F83002] font-bold"} variant="ghost">
           {auth?.profile?.course}
         </Badge>
-
       </div>
-
 
       <div className="flex items-center gap-4 mt-4">
         <Button
@@ -145,7 +158,12 @@ const Member = ({ auth }) => {
         >
           Details
         </Button>
-        <a href={`mailto:${auth?.email}`} className="btn bg-slate-600 text-white hover:bg-slate-700 hover:text-gray-200">Contact Me</a>
+        <a
+          href={`mailto:${auth?.email}`}
+          className="btn bg-slate-600 text-white hover:bg-slate-700 hover:text-gray-200"
+        >
+          Contact Me
+        </a>
       </div>
     </div>
   );

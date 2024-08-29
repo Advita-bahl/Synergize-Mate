@@ -34,7 +34,11 @@ const MemberDescription2 = () => {
   useEffect(() => {
     const fetchSingleUser = async () => {
       try {
+        const token = localStorage.getItem("authToken");
         const res = await axios.get(`${USER_API_END_POINT}/get/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Add token to Authorization header
+          },
           withCredentials: true,
         });
         if (res.data.success) {
