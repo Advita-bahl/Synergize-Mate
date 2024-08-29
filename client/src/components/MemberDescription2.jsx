@@ -22,6 +22,7 @@ const isResume = true;
 
 const MemberDescription2 = () => {
   const { singleUser } = useSelector((store) => store.auth);
+  
   const { user } = useSelector((store) => store.auth);
 
 
@@ -35,6 +36,7 @@ const MemberDescription2 = () => {
     const fetchSingleUser = async () => {
       try {
         const token = localStorage.getItem("authToken");
+        // console.log("Fetching user with ID:", userId);
         const res = await axios.get(`${USER_API_END_POINT}/get/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`, // Add token to Authorization header
@@ -42,15 +44,18 @@ const MemberDescription2 = () => {
           withCredentials: true,
         });
         if (res.data.success) {
-
+          // console.log("Fetched user data:", res.data.user);
           dispatch(setSingleUser(res.data.user));
+          
         }
       } catch (error) {
         console.log(error);
       }
     };
     fetchSingleUser();
-  }, [userId, dispatch, user?._id]);
+  }, [userId, dispatch]);
+
+ 
 
   return (
     <div className="bg-slate-100">
