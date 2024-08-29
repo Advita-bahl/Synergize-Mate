@@ -150,6 +150,9 @@ export const getAllUsers = async (req, res) => {
       $or: [
         { fullname: { $regex: keyword, $options: "i" } },
         { "profile.bio": { $regex: keyword, $options: "i" } },
+        { "profile.year": { $regex: keyword, $options: "i" } },
+        { "profile.dept": { $regex: keyword, $options: "i" } },
+        { "profile.course": { $regex: keyword, $options: "i" } },
         { location: { $regex: keyword, $options: "i" } },
       ],
     };
@@ -206,6 +209,9 @@ export const updateProfile = async (req, res) => {
       location,
       description,
       experience,
+      dept,
+      year,
+      course,
     } = req.body;
 
 
@@ -259,6 +265,9 @@ export const updateProfile = async (req, res) => {
     if (location) user.profile.location = location;
     if (description) user.profile.description = description;
     if (experience) user.profile.experience = experience;
+    if (dept) user.profile.dept = dept;
+    if (year) user.profile.year = year;
+    if (course) user.profile.course = course;
 
     // resume comes later here...
     if (cloudResponse) {
@@ -279,7 +288,10 @@ export const updateProfile = async (req, res) => {
       instagram: user.profile.instagram,
       location: user.profile.location,
       description: user.profile.description,
-      experience: user.profile.experience
+      experience: user.profile.experience,
+      year: user.profile.year,
+      dept: user.profile.dept,
+      course: user.profile.course,
     };
 
     return res.status(200).json({

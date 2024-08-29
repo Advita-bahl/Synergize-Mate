@@ -21,6 +21,9 @@ const userSchema = new mongoose.Schema({
     wishlist: [{ type:mongoose.Schema.Types.ObjectId, ref:"User"}],
     profile:{
         bio :{type: String},
+        dept: {type: String},
+        year: {type: String},
+        course: {type: String},
         skills: [{type:String}],
         description: {type: String},
         github: {type: String},
